@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>CareConnect | Login</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+<style>
+:root{
+  --blue:#4a90e2;
+  --blue-soft:#eaf4ff;
+}
+*{box-sizing:border-box;font-family:'Poppins',sans-serif}
+
+body{
+  margin:0;min-height:100vh;
+  background:linear-gradient(135deg,#f5faff,#e6f1ff);
+  display:flex;justify-content:center;align-items:center;
+}
+.login-card{
+  background:white;
+  width:100%;max-width:420px;
+  padding:32px;border-radius:22px;
+  box-shadow:0 30px 60px rgba(74,144,226,.18);
+}
+.brand{text-align:center;margin-bottom:26px}
+.brand h1{color:var(--blue)}
+.field{margin-bottom:18px}
+.input-box{
+  display:flex;align-items:center;
+  background:var(--blue-soft);
+  padding:12px 14px;border-radius:14px;
+}
+.input-box i{color:var(--blue);margin-right:10px}
+.input-box input{
+  border:none;outline:none;background:transparent;width:100%;
+}
+.toggle{
+  display:flex;background:var(--blue-soft);
+  border-radius:18px;padding:6px;
+}
+.toggle span{
+  flex:1;text-align:center;padding:10px;
+  font-weight:600;cursor:pointer;
+}
+.active{background:var(--blue);color:white;border-radius:14px}
+button{
+  width:100%;margin-top:20px;
+  padding:14px;border:none;border-radius:16px;
+  background:linear-gradient(135deg,#4a90e2,#3578c6);
+  color:white;font-weight:600;font-size:16px;
+  cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div class="login-card">
+
+  <div class="brand">
+    <h1>CareConnect</h1>
+    <p>Compassionate care, always connected</p>
+  </div>
+
+  <div class="field">
+    <div class="input-box">
+      <i class="fa-solid fa-envelope"></i>
+      <input type="email" placeholder="Email">
+    </div>
+  </div>
+
+  <div class="field">
+    <div class="input-box">
+      <i class="fa-solid fa-lock"></i>
+      <input type="password" placeholder="Password">
+    </div>
+  </div>
+
+  <div class="field">
+    <label>Select Role</label>
+    <div class="toggle">
+      <span id="family" class="active">Family</span>
+      <span id="nurse">Nurse</span>
+    </div>
+  </div>
+
+  <button onclick="login()">Login</button>
+
+</div>
+
+<script>
+let role = "family";
+
+document.getElementById("family").onclick = () => {
+  role = "family";
+  family.classList.add("active");
+  nurse.classList.remove("active");
+};
+
+document.getElementById("nurse").onclick = () => {
+  role = "nurse";
+  nurse.classList.add("active");
+  family.classList.remove("active");
+};
+
+function login() {
+  if (role === "family") {
+    window.location.href = "patient-details.html";
+  } else {
+    window.location.href = "nurse-infostore.html";
+  }
+}
+</script>
+
+</body>
+</html>
+
