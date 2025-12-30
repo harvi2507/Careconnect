@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CareConnect | Request Sent</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&display=swap" rel="stylesheet">
+
+  <!-- Icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+  <style>
+    :root {
+      --blue-main: #4a90e2;
+      --blue-soft: #eaf4ff;
+      --white: #ffffff;
+      --text-dark: #2b2b2b;
+      --text-light: #6a6a6a;
+      --success: #2ecc71;
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      margin: 0;
+      background: var(--blue-soft);
+      min-height: 100vh;
+    }
+
+    /* HEADER */
+    .header {
+      background: var(--white);
+      padding: 18px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 8px 20px rgba(74,144,226,0.15);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+    }
+
+    .logo-icon {
+      width: 42px;
+      height: 42px;
+      background: var(--blue-main);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 12px;
+    }
+
+    .logo-icon i {
+      color: white;
+      font-size: 20px;
+    }
+
+    .logo-text {
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--blue-main);
+    }
+
+    /* PAGE CONTENT */
+    .container {
+      max-width: 600px;
+      margin: 80px auto;
+      padding: 30px;
+    }
+
+    .card {
+      background: var(--white);
+      border-radius: 24px;
+      padding: 40px 30px;
+      text-align: center;
+      box-shadow: 0 25px 50px rgba(74,144,226,0.25);
+    }
+
+    .success-icon {
+      width: 90px;
+      height: 90px;
+      margin: auto;
+      background: rgba(46,204,113,0.15);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .success-icon i {
+      font-size: 40px;
+      color: var(--success);
+    }
+
+    h1 {
+      color: var(--blue-main);
+      margin-bottom: 10px;
+    }
+
+    .message {
+      color: var(--text-light);
+      font-size: 14px;
+      line-height: 1.6;
+      margin-bottom: 25px;
+    }
+
+    .info-box {
+      background: var(--blue-soft);
+      border-radius: 16px;
+      padding: 16px;
+      font-size: 13px;
+      color: var(--text-dark);
+      margin-bottom: 25px;
+    }
+
+    .btn {
+      padding: 12px 24px;
+      border-radius: 14px;
+      border: none;
+      cursor: pointer;
+      font-size: 14px;
+      background: var(--blue-main);
+      color: white;
+      margin: 6px;
+    }
+
+    .btn.secondary {
+      background: #dbe9f9;
+      color: var(--blue-main);
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="logo">
+    <div class="logo-icon">
+      <i class="fa-solid fa-heart-pulse"></i>
+    </div>
+    <div class="logo-text">CareConnect</div>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div class="container">
+  <div class="card">
+
+    <div class="success-icon">
+      <i class="fa-solid fa-check"></i>
+    </div>
+
+    <h1>Request Sent Successfully</h1>
+
+    <div class="message">
+      Your care request has been sent to the assigned nurse.  
+      They will review the request and respond shortly.
+    </div>
+
+    <div class="info-box">
+      ⏱️ Average response time: <b>10–15 minutes</b><br>
+      🤖 AI is continuously monitoring patient vitals for safety
+    </div>
+
+    <button onclick="location.href='dashboard.html'" class="btn">Go to Dashboard</button>
+    <button class="btn secondary">View Request Status</button>
+
+  </div>
+</div>
+
+</body>
+</html>

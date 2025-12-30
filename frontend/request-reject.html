@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CareConnect | Request Rejected</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+  <style>
+    :root {
+      --blue-main: #4a90e2;
+      --blue-soft: #eaf4ff;
+      --white: #ffffff;
+      --text-dark: #2b2b2b;
+      --danger: #e74c3c;
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      margin: 0;
+      background: var(--blue-soft);
+      min-height: 100vh;
+    }
+
+    .header {
+      background: var(--white);
+      padding: 18px 30px;
+      display: flex;
+      align-items: center;
+      box-shadow: 0 8px 20px rgba(74,144,226,0.15);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+    }
+
+    .logo-icon {
+      width: 42px;
+      height: 42px;
+      background: var(--blue-main);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 12px;
+    }
+
+    .logo-icon i {
+      color: white;
+      font-size: 20px;
+    }
+
+    .logo-text {
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--blue-main);
+    }
+
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 40px 20px;
+    }
+
+    .status-card {
+      background: var(--white);
+      padding: 40px;
+      border-radius: 26px;
+      max-width: 480px;
+      text-align: center;
+      box-shadow: 0 25px 50px rgba(74,144,226,0.25);
+    }
+
+    .status-icon {
+      width: 80px;
+      height: 80px;
+      background: var(--danger);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+    }
+
+    .status-icon i {
+      color: white;
+      font-size: 34px;
+    }
+
+    h2 {
+      color: var(--text-dark);
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 14px;
+      color: #555;
+      margin-bottom: 30px;
+    }
+
+    .btn {
+      padding: 14px 28px;
+      border-radius: 16px;
+      border: none;
+      background: var(--blue-main);
+      color: white;
+      font-size: 15px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      box-shadow: 0 12px 25px rgba(74,144,226,0.35);
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="header">
+  <div class="logo">
+    <div class="logo-icon">
+      <i class="fa-solid fa-heart-pulse"></i>
+    </div>
+    <div class="logo-text">CareConnect</div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="status-card">
+    <div class="status-icon">
+      <i class="fa-solid fa-xmark"></i>
+    </div>
+    <h2>Request Rejected</h2>
+    <p>You have declined the care request.  
+       The family will be notified and redirected to another nurse.</p>
+
+    <button onclick="location.href='nurseui.html'" class="btn">Back to Home</button>
+  </div>
+</div>
+
+</body>
+</html>
