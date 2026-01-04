@@ -10,7 +10,7 @@ Already existing user Details:
     1.E-mail-ID: nancy@gmail.com
       Password:123456
     
-    2.E-mail-ID: priya@gmail.com
+  2.E-mail-ID: priya@gmail.com
       Password:123456
 
       
