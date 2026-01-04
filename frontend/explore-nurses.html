@@ -210,65 +210,6 @@ button{
 
 <!-- NURSE GRID -->
 <div class="grid" id="nurseGrid">
-
-  <!-- CARD -->
-  <div class="card" data-care="elderly dementia">
-    <div class="avatar">👩‍⚕️</div>
-    <h3>Neha Sharma</h3>
-    <div class="tags">
-      <span>Dementia Care</span>
-      <span>Full-Time</span>
-    </div>
-    <div class="meta">
-      <i class="fa-solid fa-briefcase"></i> 6 yrs experience<br>
-      <i class="fa-solid fa-location-dot"></i> Ahmedabad
-    </div>
-    <span class="badge">Highly Recommended</span>
-    <div class="price">₹1,500 / day</div>
-    <div class="actions">
-      <button onclick="location.href='nurse-profile.html'">View Profile</button>
-      <button class="outline">Request</button>
-    </div>
-  </div>
-
-  <div class="card" data-care="postop">
-    <div class="avatar">👩‍⚕️</div>
-    <h3>Pooja Patel</h3>
-    <div class="tags">
-      <span>Post-Operative</span>
-      <span>Night Shift</span>
-    </div>
-    <div class="meta">
-      <i class="fa-solid fa-briefcase"></i> 4 yrs experience<br>
-      <i class="fa-solid fa-location-dot"></i> Surat
-    </div>
-    <div class="price">₹1,800 / day</div>
-    <div class="actions">
-      <button onclick="location.href='nurse-detail.html'">View Profile</button>
-      <button onclick="location.href='post-care-request.html'" class="outline">Request</button>
-    </div>
-  </div>
-
-  <div class="card" data-care="icu">
-    <div class="avatar">👨‍⚕️</div>
-    <h3>Rahul Verma</h3>
-    <div class="tags">
-      <span>ICU Care</span>
-      <span>24×7</span>
-    </div>
-    <div class="meta">
-      <i class="fa-solid fa-briefcase"></i> 9 yrs experience<br>
-      <i class="fa-solid fa-location-dot"></i> Mumbai
-    </div>
-    <span class="badge">Critical Care Expert</span>
-    <div class="price">₹2,200 / day</div>
-    <div class="actions">
-      <button onclick="location.href='nurse-profile.html'">View Profile</button>
-      <button class="outline">Request</button>
-    </div>
-  </div>
-
-</div>
 </div>
 
 <script>
@@ -277,7 +218,8 @@ function filterNurses(type){
   const buttons=document.querySelectorAll('.filter-btn');
 
   buttons.forEach(btn=>btn.classList.remove('active'));
-  event.target.classList.add('active');
+  document.activeElement.classList.add('active');
+
 
   cards.forEach(card=>{
     const care=card.dataset.care;
@@ -289,7 +231,79 @@ function filterNurses(type){
   });
 }
 </script>
+<script type="module">
+import { db } from "./firebase.js";
+import {
+  collection,
+  query,
+  where,
+  getDocs
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+const nurseGrid = document.getElementById("nurseGrid");
+
+// 🔥 Load nurses from Firestore
+async function loadNurses() {
+  nurseGrid.innerHTML = "";
+
+  console.log("Fetching nurses...");
+
+  const q = query(
+    collection(db, "users"),
+    where("role", "==", "nurse")
+  );
+
+  const snapshot = await getDocs(q);
+
+  console.log("Docs found:", snapshot.size);
+
+  if (snapshot.empty) {
+    nurseGrid.innerHTML = "<p>No nurses available</p>";
+    return;
+  }
+
+  snapshot.forEach(docSnap => {
+    const n = docSnap.data();
+
+    const card = document.createElement("div");
+    card.className = "card";
+    card.dataset.care = n.specialization?.toLowerCase() || "";
+
+    card.innerHTML = `
+      <div class="avatar">👩‍⚕️</div>
+      <h3>${n.fullName || "Nurse"}</h3>
+
+      <div class="tags">
+        <span>${n.specialization || "General Care"}</span>
+        <span>${n.availability || "Available"}</span>
+      </div>
+
+      <div class="meta">
+        <i class="fa-solid fa-briefcase"></i>
+        ${n.experience || 0} yrs experience<br>
+        <i class="fa-solid fa-location-dot"></i>
+        ${n.city || "India"}
+      </div>
+
+      <div class="price">₹${n.cost || "N/A"} / day</div>
+
+      <div class="actions">
+        <button onclick="viewProfile('${docSnap.id}')">View Profile</button>
+        
+      </div>
+    `;
+
+    nurseGrid.appendChild(card);
+  });
+}
+
+loadNurses();
+
+// 🔗 Redirect to nurse profile
+window.viewProfile = function(uid) {
+  window.location.href = `nurse-profile.html?uid=${uid}`;
+};
+</script>
 
 </body>
 </html>
-
