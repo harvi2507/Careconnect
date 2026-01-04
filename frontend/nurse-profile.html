@@ -139,37 +139,129 @@ button{
     <div class="card-header">
       <div class="avatar">👩‍⚕️</div>
       <div>
-        <h2>Neha Sharma</h2>
-        <div class="tags">
-          <span>Geriatric Care</span>
-          <span>Full-Time</span>
-          <span>5+ Years</span>
-        </div>
-        <p><strong>₹1,500 / day</strong></p>
+        <h2 id="name">Loading...</h2>
+<div class="tags">
+  <span id="specialization"></span>
+  <span id="availability"></span>
+  <span id="experience"></span>
+</div>
+<p><strong id="price"></strong></p>
+
       </div>
     </div>
 
     <div class="section">
       <h3>Professional Summary</h3>
-      <p>
-        Certified home nurse with 5+ years of experience in elderly care,
-        chronic illness management, and post-hospital recovery.
-      </p>
+      <p id="summary"></p>
+
     </div>
 
     <div class="section">
       <h3>Details</h3>
-      <p><strong>Location:</strong> Ahmedabad</p>
-      <p><strong>Languages:</strong> English, Hindi, Gujarati</p>
-      <p><strong>Availability:</strong> Full-Time</p>
+     <p><strong>Location:</strong> <span id="city"></span></p>
+<p><strong>Languages:</strong> <span id="languages"></span></p>
+<p><strong>Availability:</strong> <span id="availability2"></span></p>
+
     </div>
 
-    <button onclick="location.href='post-care-request.html'">
-      Request Care
-    </button>
+    <button id="requestBtn">
+  Request Care
+</button>
+
 
   </div>
 </div>
+
+<script type="module">
+  import {
+  collection,
+  addDoc,
+  serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+import {
+  getAuth,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+  
+import { db } from "./firebase.js";
+import {
+  doc,
+  getDoc
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+// 1️⃣ Get UID from URL
+const params = new URLSearchParams(window.location.search);
+const uid = params.get("uid");
+
+if (!uid) {
+  alert("Invalid nurse profile");
+  throw new Error("UID missing");
+}
+
+// 2️⃣ Fetch nurse data
+async function loadNurseProfile() {
+  const ref = doc(db, "users", uid);
+  const snap = await getDoc(ref);
+
+  if (!snap.exists()) {
+    alert("Nurse not found");
+    return;
+  }
+
+  const n = snap.data();
+
+  // 3️⃣ Inject data into page
+  document.getElementById("name").textContent = n.fullName || "Nurse";
+  document.getElementById("specialization").textContent = n.specialization || "General Care";
+  document.getElementById("availability").textContent = n.availability || "Available";
+  document.getElementById("availability2").textContent = n.availability || "Available";
+  document.getElementById("experience").textContent = `${n.experience || 0}+ Years`;
+  document.getElementById("price").textContent = `₹${n.cost || "N/A"} / day`;
+  document.getElementById("city").textContent = n.city || "India";
+  document.getElementById("languages").textContent = n.languages || "English";
+  document.getElementById("summary").textContent =
+    n.summary || "Professional home care nurse.";
+}
+
+loadNurseProfile();
+const auth = getAuth();
+const requestBtn = document.getElementById("requestBtn");
+
+let currentUser = null;
+
+// Check login
+onAuthStateChanged(auth, user => {
+  if (!user) {
+    alert("Please login first");
+    window.location.href = "login.html";
+    return;
+  }
+  currentUser = user;
+});
+
+// Send care request
+requestBtn.addEventListener("click", async () => {
+  if (!currentUser) return;
+
+  try {
+    await addDoc(collection(db, "careRequests"), {
+      nurseId: uid,              // nurse profile you are viewing
+      userId: currentUser.uid,   // logged-in user
+      status: "pending",
+      createdAt: serverTimestamp()
+    });
+
+    alert("Care request sent successfully!");
+    window.location.href = "post-care-request.html";
+  } catch (error) {
+    console.error(error);
+    alert("Failed to send request");
+  }
+});
+
+</script>
 
 </body>
 </html>
