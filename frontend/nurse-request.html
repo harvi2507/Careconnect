@@ -171,24 +171,157 @@ h2{
 <div class="container">
   <h2>Incoming Care Requests</h2>
 
-  <div class="request-card">
-    <div class="request-top">
+  <div id="requestsContainer"></div>
 
-      <div class="request-info">
-        <h3>Ramesh Patel (72 yrs)</h3>
-        <p>Location: Ahmedabad • Shift: Full Day</p>
-      </div>
-
-      <!-- ACTION BUTTONS -->
-      <div class="actions">
-        <button onclick="location.href='patient-profile.html'" class="view-btn">View Details</button>
-        <button onclick="location.href='request-accept.html'" class="accept-btn">Accept</button>
-        <button onclick="location.href='request-reject.html'" class="reject-btn">Reject</button>
-      </div>
-
-    </div>
-  </div>
 </div>
+
+<script type="module">
+import { db } from "./firebase.js";
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  doc,
+  getDoc,
+  updateDoc
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+import {
+  getAuth,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+const auth = getAuth();
+const container = document.getElementById("requestsContainer");
+
+/* ===============================
+   TELEGRAM FUNCTION
+=============================== */
+async function sendTelegramMessage(chatId, message) {
+  const botToken = "8574674998:AAFHc_QfUwU-StFTsWbdxyHaf5ZxJ9Jm4rA";
+
+  try {
+    await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        chat_id: chatId,
+        text: message
+      })
+    });
+  } catch (err) {
+    console.error("Telegram Error:", err);
+  }
+}
+
+/* ===============================
+   AUTH CHECK
+=============================== */
+onAuthStateChanged(auth, async user => {
+  if (!user) {
+    alert("Please login");
+    window.location.href = "login.html";
+    return;
+  }
+
+  loadRequests(user.uid);
+});
+
+/* ===============================
+   LOAD REQUESTS
+=============================== */
+async function loadRequests(nurseUid) {
+  container.innerHTML = "";
+
+  const q = query(
+    collection(db, "careRequests"),
+    where("nurseId", "==", nurseUid),
+    where("status", "==", "pending")
+  );
+
+  const snapshot = await getDocs(q);
+
+  if (snapshot.empty) {
+    container.innerHTML = "<p>No new requests</p>";
+    return;
+  }
+
+  for (const req of snapshot.docs) {
+    const data = req.data();
+
+    const userSnap = await getDoc(doc(db, "users", data.userId));
+    if (!userSnap.exists()) continue;
+
+    const patient = userSnap.data();
+
+    const card = document.createElement("div");
+    card.className = "request-card";
+
+    card.innerHTML = `
+      <div class="request-top">
+        <div class="request-info">
+          <h3>${patient.patientName || "Patient"} (${patient.age || "N/A"} yrs)</h3>
+        </div>
+
+        <div class="actions">
+          <button class="view-btn" onclick="viewPatient('${data.userId}')">
+            View Details
+          </button>
+          <button class="accept-btn" onclick="updateStatus('${req.id}','accepted','${patient.telegramChatId}')">
+            Accept
+          </button>
+          <button class="reject-btn" onclick="updateStatus('${req.id}','rejected','${patient.telegramChatId}')">
+            Reject
+          </button>
+        </div>
+      </div>
+    `;
+
+    container.appendChild(card);
+  }
+}
+
+/* ===============================
+   VIEW PATIENT
+=============================== */
+window.viewPatient = function(uid) {
+  window.location.href = `patient-profile.html?uid=${uid}`;
+};
+
+/* ===============================
+   ACCEPT / REJECT + TELEGRAM
+=============================== */
+window.updateStatus = async function(requestId, status, chatId) {
+  try {
+    const nurse = auth.currentUser;
+    const nurseSnap = await getDoc(doc(db, "users", nurse.uid));
+    const nurseName = nurseSnap.exists() ? nurseSnap.data().name : "Your Nurse";
+
+    await updateDoc(doc(db, "careRequests", requestId), {
+      status,
+      updatedAt: new Date(),
+      nurseName
+    });
+
+    if (chatId) {
+      const msg =
+        status === "accepted"
+          ? `✅ CareConnect\nYour care request has been accepted by ${nurseName}.`
+          : `❌ CareConnect\nYour care request has been rejected by ${nurseName}.`;
+
+      await sendTelegramMessage(chatId, msg);
+    }
+
+    alert(`Request ${status}`);
+    location.reload();
+  } catch (err) {
+    console.error(err);
+    alert("Action failed");
+  }
+};
+</script>
+
 
 </body>
 </html>
