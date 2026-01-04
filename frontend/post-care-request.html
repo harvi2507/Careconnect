@@ -173,10 +173,81 @@
     </div>
 
     <button onclick="location.href='dashboard.html'" class="btn">Go to Dashboard</button>
-    <button class="btn secondary">View Request Status</button>
+    <button onclick="location.href='request-status.html'" class="btn secondary">View Request Status</button>
 
   </div>
 </div>
+
+<script type="module">
+import { auth, db } from "./firebase.js";
+
+import { onAuthStateChanged } from
+"https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  doc,
+  getDoc
+} from
+"https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+const statusEl = document.getElementById("status");
+const nurseName = document.getElementById("nurseName");
+const specialization = document.getElementById("specialization");
+const experience = document.getElementById("experience");
+const city = document.getElementById("city");
+
+onAuthStateChanged(auth, async (user) => {
+  if (!user) {
+    alert("Please login");
+    location.href = "login.html";
+    return;
+  }
+
+  try {
+    // 🔹 Fetch request sent by this user
+    const q = query(
+      collection(db, "careRequests"),
+      where("userId", "==", user.uid)
+    );
+
+    const snap = await getDocs(q);
+
+    if (snap.empty) {
+      statusEl.textContent = "No request found";
+      return;
+    }
+
+    // Take the first request (latest enough for now)
+    const reqData = snap.docs[0].data();
+
+    statusEl.textContent = reqData.status || "Pending";
+
+    // 🔹 Fetch nurse info
+    const nurseSnap = await getDoc(
+      doc(db, "users", reqData.nurseId)
+    );
+
+    if (!nurseSnap.exists()) {
+      nurseName.textContent = "Nurse not found";
+      return;
+    }
+
+    const n = nurseSnap.data();
+    nurseName.textContent = n.fullName || "-";
+    specialization.textContent = n.specialization || "-";
+    experience.textContent = (n.experience || 0) + " Years";
+    city.textContent = n.city || "-";
+
+  } catch (err) {
+    console.error("Request Status Error:", err);
+    statusEl.textContent = "Error loading request";
+  }
+});
+</script>
 
 </body>
 </html>
