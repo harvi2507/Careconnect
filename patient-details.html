@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>CareConnect | Patient Details</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome Icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+  <style>
+    :root {
+      --blue-main: #4a90e2;
+      --blue-soft: #eaf4ff;
+      --blue-accent: #3578c6;
+      --text-dark: #2b2b2b;
+      --text-light: #6a6a6a;
+      --white: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+    .header {
+      background: var(--white);
+      padding: 18px 30px;
+      display: flex;
+      align-items: center;
+      box-shadow: 0 8px 20px rgba(74,144,226,0.15);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+    }
+
+    .logo-icon {
+      width: 42px;
+      height: 42px;
+      background: var(--blue-main);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 12px;
+    }
+
+    .logo-icon i {
+      color: white;
+      font-size: 20px;
+    }
+
+    .logo-text {
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--black-main);
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #f5faff, #e6f1ff);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .profile-card {
+      background: var(--white);
+      width: 100%;
+      max-width: 850px;
+      padding: 32px;
+      border-radius: 22px;
+      box-shadow: 0 30px 60px rgba(74,144,226,0.18);
+    }
+
+    .brand {
+      text-align: center;
+      margin-bottom: 26px;
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: 26px;
+      font-weight: 600;
+      color: var(--blue-main);
+    }
+
+    .brand p {
+      font-size: 14px;
+      color: var(--text-light);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+    }
+
+    .field label {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 6px;
+      display: block;
+      color: var(--text-dark);
+    }
+
+    .input-box {
+      display: flex;
+      align-items: center;
+      background: var(--blue-soft);
+      padding: 12px 14px;
+      border-radius: 14px;
+      transition: 0.3s;
+    }
+
+    .input-box:hover {
+      box-shadow: 0 0 0 3px rgba(74,144,226,0.25);
+    }
+
+    .input-box i {
+      color: var(--blue-main);
+      margin-right: 10px;
+      font-size: 16px;
+      min-width: 18px;
+    }
+
+    .input-box input,
+    .input-box select,
+    .input-box textarea {
+      border: none;
+      outline: none;
+      background: transparent;
+      width: 100%;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-dark);
+    }
+
+    textarea {
+      resize: none;
+      height: 80px;
+    }
+
+    .status-pending {
+      font-size: 13px;
+      font-weight: 600;
+      margin-top: 6px;
+      color: #d48806;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 28px;
+      padding: 14px;
+      border: none;
+      border-radius: 16px;
+      font-size: 16px;
+      font-weight: 600;
+      color: white;
+      background: linear-gradient(135deg, var(--blue-main), var(--blue-accent));
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 15px 35px rgba(74,144,226,0.4);
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="profile-card">
+
+  <div class="brand">
+    <h1>Patient Details</h1>
+    <p>Accurate information helps us provide safer & better care</p>
+  </div>
+
+  <div class="grid">
+
+    <!-- Patient Basic Info -->
+    <div class="field">
+      <label>Patient Name</label>
+      <div class="input-box">
+        <i class="fa-solid fa-user"></i>
+        <input id="patientName" type="text" placeholder="Patient Full Name">
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Age</label>
+      <div class="input-box">
+        <i class="fa-solid fa-cake-candles"></i>
+        <input id="age" type="number" placeholder="Age">
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Gender</label>
+      <div class="input-box">
+        <i class="fa-solid fa-venus-mars"></i>
+        <select id="gender">
+          <option>Male</option>
+          <option>Female</option>
+          <option>Other</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Blood Group</label>
+      <div class="input-box">
+        <i class="fa-solid fa-droplet"></i>
+        <select id="bloodGroup">
+          <option>A+</option><option>A-</option>
+          <option>B+</option><option>B-</option>
+          <option>AB+</option><option>AB-</option>
+          <option>O+</option><option>O-</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Medical Info -->
+    <div class="field">
+      <label>Existing Diseases</label>
+      <div class="input-box">
+        <i class="fa-solid fa-heart-pulse"></i>
+        <input id="diseases" type="text" placeholder="Diabetes, BP, Dementia etc.">
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Allergies</label>
+      <div class="input-box">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+        <input id="allergies" type="text" placeholder="Food / Medicine allergies">
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Medical History</label>
+      <div class="input-box">
+        <i class="fa-solid fa-notes-medical"></i>
+        <textarea id="history" placeholder="Past surgeries, chronic illness"></textarea>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Current Medications</label>
+      <div class="input-box">
+        <i class="fa-solid fa-pills"></i>
+        <textarea id="medications" placeholder="Medicine name & dosage"></textarea>
+      </div>
+    </div>
+
+    <!-- Guardian Info -->
+    <div class="field">
+      <label>Guardian Name</label>
+      <div class="input-box">
+        <i class="fa-solid fa-user-shield"></i>
+        <input id="guardianName" type="text" placeholder="Guardian / Child Name">
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Relationship to Patient</label>
+      <div class="input-box">
+        <i class="fa-solid fa-people-arrows"></i>
+        <select id="guardianRelation">
+          <option>Son</option>
+          <option>Daughter</option>
+          <option>Spouse</option>
+          <option>Parent</option>
+          <option>Other</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Guardian Mobile Number</label>
+      <div class="input-box">
+        <i class="fa-solid fa-phone"></i>
+        <input id="guardianPhone" type="tel" placeholder="+91 XXXXX XXXXX">
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Guardian Email</label>
+      <div class="input-box">
+        <i class="fa-solid fa-envelope"></i>
+        <input  id="guardianEmail" type="email" placeholder="guardian@email.com">
+      </div>
+    </div>
+
+    <!-- Identity -->
+    <div class="field">
+      <label>Patient Aadhaar</label>
+      <div class="input-box">
+        <i class="fa-solid fa-id-card"></i>
+        <input type="file">
+      </div>
+      <div class="status-pending">Aadhaar Verification: Pending</div>
+    </div>
+
+  </div>
+
+  
+  <button id="saveBtn" type="button">Save Patient Details</button>
+
+
+
+</div>
+
+<script type="module">
+import { auth, db } from "./firebase.js";
+import { onAuthStateChanged } from
+  "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { doc, setDoc } from
+  "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+  import { doc, setDoc, getDoc } from
+  "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+
+const saveBtn = document.getElementById("saveBtn");
+
+let currentUser = null;
+
+// 🔐 Check login
+onAuthStateChanged(auth, async (user) => {
+  if (!user) {
+    alert("Please login first");
+    window.location.href = "index.html";
+    return;
+  }
+
+  currentUser = user;
+
+  // 🔹 Load existing data (for Settings / Edit mode)
+  const snap = await getDoc(doc(db, "users", user.uid));
+
+  if (snap.exists()) {
+    const d = snap.data();
+
+    document.getElementById("patientName").value = d.patientName || "";
+    document.getElementById("age").value = d.age || "";
+    document.getElementById("gender").value = d.gender || "";
+    document.getElementById("bloodGroup").value = d.bloodGroup || "";
+    document.getElementById("diseases").value = d.diseases || "";
+    document.getElementById("allergies").value = d.allergies || "";
+    document.getElementById("history").value = d.history || "";
+    document.getElementById("medications").value = d.medications || "";
+    document.getElementById("guardianName").value = d.guardianName || "";
+    document.getElementById("guardianRelation").value = d.guardianRelation || "";
+    document.getElementById("guardianPhone").value = d.guardianPhone || "";
+    document.getElementById("guardianEmail").value = d.guardianEmail || "";
+  }
+});
+
+
+// 💾 Save patient details
+saveBtn.addEventListener("click", async () => {
+  if (!currentUser) {
+    alert("User not authenticated");
+    return;
+  }
+
+  const patientData = {
+    patientName: document.getElementById("patientName").value,
+    age: document.getElementById("age").value,
+    gender: document.getElementById("gender").value,
+    bloodGroup: document.getElementById("bloodGroup").value,
+    diseases: document.getElementById("diseases").value,
+    allergies: document.getElementById("allergies").value,
+    history: document.getElementById("history").value,
+    medications: document.getElementById("medications").value,
+    guardianName: document.getElementById("guardianName").value,
+    guardianRelation: document.getElementById("guardianRelation").value,
+    guardianPhone: document.getElementById("guardianPhone").value,
+    guardianEmail: document.getElementById("guardianEmail").value,
+    profileCompleted: true,
+    updatedAt: new Date()
+  };
+
+  try {
+    await setDoc(
+      doc(db, "users", currentUser.uid),
+      patientData,
+      { merge: true }
+    );
+
+    alert("Patient details saved successfully");
+    window.location.href = "d1.html";
+  } catch (err) {
+    console.error("Firestore error:", err);
+    alert("Error saving patient details");
+  }
+});
+</script>
+
+</body>
+</html>

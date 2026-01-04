@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>CareConnect | Nurse Dashboard</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+<style>
+:root{
+  --blue-main:#0a73ff;
+  --blue-soft:#eef6ff;
+  --white:#ffffff;
+  --text-dark:#1f2a37;
+  --text-light:#6b7280;
+}
+
+*{box-sizing:border-box;font-family:'Poppins',sans-serif;}
+body{margin:0;background:var(--blue-soft);display:flex;}
+
+/* ===== SIDEBAR ===== */
+.sidebar{
+  width:240px;
+  background:var(--blue-main);
+  color:white;
+  padding:20px;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+}
+
+.logo{
+  display:flex;
+  align-items:center;
+  margin-bottom:30px;
+}
+
+.logo i{
+  font-size:22px;
+  margin-right:10px;
+}
+
+.logo span{
+  font-size:20px;
+  font-weight:600;
+}
+
+/* NAV ITEMS */
+.nav{
+  flex:1;
+}
+
+.nav-item{
+  padding:12px 14px;
+  border-radius:12px;
+  margin-bottom:8px;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  font-size:14px;
+  transition:.2s;
+}
+
+.nav-item i{
+  margin-right:12px;
+  font-size:16px;
+}
+
+.nav-item:hover{
+  background:rgba(255,255,255,0.18);
+}
+
+.logout{
+  margin-top:auto;
+  background:rgba(255,255,255,0.15);
+}
+
+/* ===== MAIN ===== */
+.main{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  min-height:100vh;
+}
+
+/* ===== HEADER ===== */
+.header{
+  background:var(--blue-soft);
+  padding:18px 30px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.header h2{
+  margin:0;
+  color:var(--text-dark);
+}
+
+.header-icons i{
+  font-size:18px;
+  margin-left:18px;
+  cursor:pointer;
+}
+
+/* ===== CONTENT ===== */
+.container{
+  padding:30px;
+  flex:1;
+}
+
+/* IMAGE CARD */
+.hero-card{
+  background:white;
+  border-radius:24px;
+  overflow:hidden;
+  box-shadow:0 25px 50px rgba(0,0,0,0.15);
+}
+
+.hero-card img{
+  width:100%;
+  height:420px;
+  object-fit:cover;
+  display:block;
+}
+
+/* ===== FOOTER ===== */
+.footer{
+  background:var(--blue-soft);
+  text-align:center;
+  padding:14px;
+  font-size:14px;
+  color:var(--text-light);
+}
+/* QUICK OVERVIEW */
+.overview{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:20px;
+  margin-bottom:25px;
+}
+
+.overview-card{
+  background:white;
+  border-radius:18px;
+  padding:20px;
+  display:flex;
+  align-items:center;
+  box-shadow:0 20px 40px rgba(0,0,0,0.12);
+}
+
+.overview-card i{
+  font-size:26px;
+  color:var(--blue-main);
+  margin-right:14px;
+}
+
+.overview-title{
+  font-size:13px;
+  color:var(--text-light);
+}
+
+.overview-value{
+  font-size:22px;
+  font-weight:600;
+  color:var(--text-dark);
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+
+  <!-- LOGO -->
+  <div class="logo">
+    <i class="fa-solid fa-heart"></i>
+    <span>CareConnect</span>
+  </div>
+
+  <!-- NAVIGATION -->
+  <div class="nav">
+    <div class="nav-item">
+      <i class="fa-solid fa-house"></i> Dashboard
+    </div>
+
+    <div class="nav-item" onclick="location.href='nurse-info.html'">
+      <i class="fa-solid fa-user-nurse"></i> My Profile
+    </div>
+
+    <div class="nav-item" onclick="location.href='nurse-infostore.html'">
+      <i class="fa-solid fa-gear"></i> Settings
+    </div>
+
+    <div class="nav-item" onclick="location.href='assigned-patient.html'">
+      <i class="fa-solid fa-users"></i> Assigned Patients
+    </div>
+
+    <div class="nav-item" onclick="location.href='nurse-request.html'">
+      <i class="fa-solid fa-bell"></i> Patient Requests
+    </div>
+
+    <div class="nav-item" onclick="location.href='ai.html'">
+      <i class="fa-solid fa-brain"></i> AI Alerts
+    </div>
+  </div>
+
+  <!-- LOGOUT -->
+  <div class="nav-item logout" onclick="location.href='index.html'">
+    <i class="fa-solid fa-right-from-bracket"></i> Logout
+  </div>
+
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- HEADER -->
+  <div class="header">
+    <h2>Dashboard</h2>
+    <div class="header-icons">
+      <i class="fa-regular fa-bell"></i>
+      <i class="fa-regular fa-user"></i>
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="container">
+    <!-- QUICK OVERVIEW -->
+<div class="overview">
+  <div class="overview-card">
+    <i class="fa-solid fa-users"></i>
+    <div>
+      <div class="overview-title">Assigned Patients</div>
+      <div class="overview-value">0</div>
+    </div>
+  </div>
+
+  <div class="overview-card">
+    <i class="fa-solid fa-bell"></i>
+    <div>
+      <div class="overview-title">Pending Requests</div>
+      <div class="overview-value">0</div>
+    </div>
+  </div>
+
+  <div class="overview-card">
+    <i class="fa-solid fa-brain"></i>
+    <div>
+      <div class="overview-title">AI Alerts</div>
+      <div class="overview-value">0</div>
+    </div>
+  </div>
+</div>
+
+    <div class="hero-card">
+      <img src="https://images.unsplash.com/photo-1584515933487-779824d29309" alt="Care Image">
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    © 2025 CareConnect — Smart Home Healthcare
+  </div>
+
+</div>
+
+<script type="module">
+import { db, auth } from "./firebase.js";
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+onAuthStateChanged(auth, async (user) => {
+  if (!user) {
+    window.location.href = "index.html";
+    return;
+  }
+
+  const nurseUid = user.uid;
+
+  // Count assigned patients
+  const assignedQuery = query(
+    collection(db, "careRequests"),
+    where("nurseId", "==", nurseUid),
+    where("status", "==", "accepted")
+  );
+  const assignedSnapshot = await getDocs(assignedQuery);
+  document.querySelector(".overview-card:nth-child(1) .overview-value").textContent = assignedSnapshot.size;
+
+  // Count pending requests
+  const pendingQuery = query(
+    collection(db, "careRequests"),
+    where("nurseId", "==", nurseUid),
+    where("status", "==", "pending")
+  );
+  const pendingSnapshot = await getDocs(pendingQuery);
+  document.querySelector(".overview-card:nth-child(2) .overview-value").textContent = pendingSnapshot.size;
+
+  // Count AI alerts (example)
+  // Replace this with actual AI alerts collection if exists
+  const aiAlertsQuery = query(
+    collection(db, "aiAlerts"),
+    where("nurseId", "==", nurseUid),
+    where("status", "==", "active")
+  );
+  const aiAlertsSnapshot = await getDocs(aiAlertsQuery);
+  document.querySelector(".overview-card:nth-child(3) .overview-value").textContent = aiAlertsSnapshot.size;
+});
+</script>
+
+</body>
+</html>

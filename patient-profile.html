@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CareConnect | Patient Details</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&display=swap" rel="stylesheet">
+
+  <!-- Icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+  <style>
+    :root {
+      --blue-main: #4a90e2;
+      --blue-soft: #eaf4ff;
+      --white: #ffffff;
+      --text-dark: #2b2b2b;
+      --text-light: #6a6a6a;
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+    .header {
+      background: var(--white);
+      padding: 18px 30px;
+      display: flex;
+      align-items: center;
+      box-shadow: 0 8px 20px rgba(74,144,226,0.15);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+    }
+
+    .logo-icon {
+      width: 42px;
+      height: 42px;
+      background: var(--blue-main);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 12px;
+    }
+
+    .logo-icon i {
+      color: white;
+      font-size: 20px;
+    }
+
+    .logo-text {
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--black-main);
+    }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--blue-soft);
+      display: flex;
+      justify-content: center;
+      padding: 30px;
+    }
+
+    .profile-card {
+      background: var(--white);
+      width: 100%;
+      max-width: 900px;
+      padding: 36px;
+      border-radius: 22px;
+      box-shadow: 0 30px 60px rgba(74, 144, 226, 0.2);
+    }
+
+    .brand {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .brand h1 {
+      margin: 0;
+      color: var(--blue-main);
+      font-weight: 600;
+    }
+
+    .brand p {
+      margin-top: 6px;
+      color: var(--text-light);
+      font-size: 14px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+    }
+
+    .field label {
+      font-size: 14px;
+      color: var(--text-dark);
+      margin-bottom: 6px;
+      display: block;
+      font-weight: 600;
+    }
+
+    .input-box {
+      display: flex;
+      align-items: center;
+      background: var(--blue-soft);
+      padding: 12px 14px;
+      border-radius: 14px;
+      transition: 0.3s;
+    }
+
+    .input-box:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(74, 144, 226, 0.25);
+    }
+
+    .input-box i {
+      color: var(--blue-main);
+      margin-right: 10px;
+      font-size: 16px;
+    }
+
+    .input-box input,
+    .input-box select,
+    .input-box textarea {
+      border: none;
+      outline: none;
+      background: transparent;
+      width: 100%;
+      font-size: 14px;
+      color: var(--text-dark);
+      font-weight: 600;
+      resize: none;
+    }
+
+    textarea {
+      min-height: 70px;
+    }
+
+    .status-pending {
+      margin-top: 6px;
+      font-size: 13px;
+      color: #e67e22;
+      font-weight: 600;
+    }
+
+    .section-title {
+      grid-column: 1 / -1;
+      margin-top: 20px;
+      font-size: 16px;
+      color: var(--blue-main);
+      font-weight: 600;
+    }
+  </style>
+</head>
+
+<body>
+  
+
+  <div class="profile-card">
+
+    <div class="brand">
+      <h1>Patient Details</h1>
+      <p>Accurate information helps us provide safer & better care</p>
+    </div>
+
+    <div class="grid">
+
+      <!-- BASIC INFO -->
+      <div class="section-title">Basic Information</div>
+
+      <div class="field">
+        <label>Patient Name</label>
+        <div class="input-box">
+          <i class="fa-solid fa-user"></i>
+          <input id="patientName" type="text" readonly>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Age</label>
+        <div class="input-box">
+          <i class="fa-solid fa-cake-candles"></i>
+          <input id="age" type="number" readonly>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Gender</label>
+        <div class="input-box">
+          <i class="fa-solid fa-venus-mars"></i>
+          <input id="gender" type="text"  readonly>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Blood Group</label>
+        <div class="input-box">
+          <i class="fa-solid fa-droplet"></i>
+          <input id="bloodGroup" type="text"  readonly>
+        </div>
+      </div>
+
+      <!-- MEDICAL INFO -->
+      <div class="section-title">Medical Information</div>
+
+      <div class="field">
+        <label>Existing Diseases</label>
+        <div class="input-box">
+          <i class="fa-solid fa-heart-pulse"></i>
+          <input id="diseases" type="text"  readonly>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Allergies</label>
+        <div class="input-box">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+          <input id="allergies" type="text"  readonly>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Medical History</label>
+        <div class="input-box">
+          <i class="fa-solid fa-notes-medical"></i>
+          <textarea id="history" readonly></textarea>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Current Medications</label>
+        <div class="input-box">
+          <i class="fa-solid fa-pills"></i>
+          <textarea id="medications" readonly></textarea>
+        </div>
+      </div>
+
+      <!-- GUARDIAN -->
+      <div class="section-title">Guardian Details</div>
+
+      <div class="field">
+        <label>Guardian Name</label>
+        <div class="input-box">
+          <i class="fa-solid fa-user-shield"></i>
+          <input id="guardianName" type="text"  readonly>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Relationship</label>
+        <div class="input-box">
+          <i class="fa-solid fa-people-arrows"></i>
+          <input id="guardianRelation" type="text"  readonly>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Guardian Mobile</label>
+        <div class="input-box">
+          <i class="fa-solid fa-phone"></i>
+          <input id="guardianPhone" type="text" readonly>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Guardian Email</label>
+        <div class="input-box">
+          <i class="fa-solid fa-envelope"></i>
+          <input id="guardianEmail" type="email" readonly>
+        </div>
+      </div>
+
+      <!-- ID -->
+      <div class="field">
+        <label>Patient Aadhaar</label>
+        <div class="input-box">
+          <i class="fa-solid fa-id-card"></i>
+          <input type="text" value="Uploaded" readonly>
+        </div>
+        <div class="status-pending">Aadhaar Verification: Pending</div>
+      </div>
+
+    </div>
+  </div>
+
+  <script type="module">
+import { auth, db } from "./firebase.js";
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { doc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+onAuthStateChanged(auth, async (user) => {
+  if (!user) {
+    window.location.href = "index.html";
+    return;
+  }
+
+  // 🔹 Check if a UID is passed in URL (nurse viewing a patient)
+  const params = new URLSearchParams(window.location.search);
+  const uid = params.get("uid") || user.uid; // fallback to current user if no uid
+
+  const docRef = doc(db, "users", uid);
+  const snap = await getDoc(docRef);
+
+  if (!snap.exists()) {
+    alert("No patient data found");
+    return;
+  }
+
+  const data = snap.data();
+
+  // Fill UI
+  document.getElementById("patientName").value = data.patientName || "";
+  document.getElementById("age").value = data.age || "";
+  document.getElementById("gender").value = data.gender || "";
+  document.getElementById("bloodGroup").value = data.bloodGroup || "";
+  document.getElementById("diseases").value = data.diseases || "";
+  document.getElementById("allergies").value = data.allergies || "";
+  document.getElementById("history").value = data.history || "";
+  document.getElementById("medications").value = data.medications || "";
+  document.getElementById("guardianName").value = data.guardianName || "";
+  document.getElementById("guardianRelation").value = data.guardianRelation || "";
+  document.getElementById("guardianPhone").value = data.guardianPhone || "";
+  document.getElementById("guardianEmail").value = data.guardianEmail || "";
+});
+</script>
+
+</body>
+</html>

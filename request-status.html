@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>CareConnect | Request Status</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --blue-main:#0a73ff;
+  --blue-soft:#eef6ff;
+  --white:#ffffff;
+  --text-dark:#1f2a37;
+}
+
+*{box-sizing:border-box;font-family:'Poppins',sans-serif;}
+body{
+  margin:0;
+  background:var(--blue-soft);
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+}
+
+/* ===== HEADER ===== */
+header{
+  background:white;
+  color:var(--blue-main);
+  padding:16px 32px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+header h2{
+  margin:0;
+  font-size:22px;
+  font-weight:600;
+}
+
+/* ===== MAIN CENTER ===== */
+.main-wrapper{
+  flex:1;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+/* ===== CARD ===== */
+.card{
+  background:var(--white);
+  width:100%;
+  max-width:480px;
+  padding:32px;
+  border-radius:22px;
+  box-shadow:0 30px 60px rgba(0,0,0,.15);
+}
+
+h1{
+  text-align:center;
+  color:var(--blue-main);
+  margin-bottom:18px;
+}
+
+.info{
+  background:var(--blue-soft);
+  padding:16px;
+  border-radius:14px;
+  margin-bottom:16px;
+}
+
+p{margin:8px 0;color:var(--text-dark);font-size:14px;}
+
+button{
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:14px;
+  background:var(--blue-main);
+  color:white;
+  font-weight:600;
+  cursor:pointer;
+}
+button:hover{background:#055fe0;}
+
+/* ===== FOOTER ===== */
+footer{
+  text-align:center;
+  padding:14px;
+  color:#6b7280;
+  font-size:13px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- ===== HEADER ===== -->
+<header>
+  <h2> CareConnect</h2>
+</header>
+
+<!-- ===== MAIN CONTENT ===== -->
+<div class="main-wrapper">
+  <div class="card">
+    <h1>Request Status</h1>
+
+    <p><strong>Status:</strong> <span id="status">Loading...</span></p>
+
+    <div class="info">
+      <p><strong>Nurse Name:</strong> <span id="nurseName">Loading...</span></p>
+      <p><strong>Specialization:</strong> <span id="specialization">Loading...</span></p>
+      <p><strong>Experience:</strong> <span id="experience">Loading...</span></p>
+      <p><strong>City:</strong> <span id="city">Loading...</span></p>
+    </div>
+
+    <button onclick="location.href='d1.html'">
+      Back to Dashboard
+    </button>
+  </div>
+</div>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  © 2025 CareConnect — Smart Home Healthcare
+</footer>
+
+<script type="module">
+import { auth, db } from "./firebase.js";
+
+import { onAuthStateChanged } from
+"https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  doc,
+  getDoc
+} from
+"https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+const statusEl = document.getElementById("status");
+const nurseName = document.getElementById("nurseName");
+const specialization = document.getElementById("specialization");
+const experience = document.getElementById("experience");
+const city = document.getElementById("city");
+
+onAuthStateChanged(auth, async (user) => {
+  if (!user) {
+    alert("Please login");
+    location.href = "index.html";
+    return;
+  }
+
+  try {
+    const q = query(
+      collection(db, "careRequests"),
+      where("userId", "==", user.uid)
+    );
+
+    const snap = await getDocs(q);
+
+    if (snap.empty) {
+      statusEl.textContent = "No request found";
+      return;
+    }
+
+    const reqData = snap.docs[0].data();
+    statusEl.textContent = reqData.status || "Pending";
+
+    const nurseSnap = await getDoc(
+      doc(db, "users", reqData.nurseId)
+    );
+
+    if (!nurseSnap.exists()) {
+      nurseName.textContent = "Nurse not found";
+      return;
+    }
+
+    const n = nurseSnap.data();
+    nurseName.textContent = n.fullName || "-";
+    specialization.textContent = n.specialization || "-";
+    experience.textContent = (n.experience || 0) + " Years";
+    city.textContent = n.city || "-";
+
+  } catch (error) {
+    console.error("Request status error:", error);
+    statusEl.textContent = "Failed to load request";
+  }
+});
+</script>
+
+</body>
+</html>
