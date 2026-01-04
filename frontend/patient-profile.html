@@ -180,7 +180,7 @@
         <label>Patient Name</label>
         <div class="input-box">
           <i class="fa-solid fa-user"></i>
-          <input type="text" value="Ramesh Patel" readonly>
+          <input id="patientName" type="text" readonly>
         </div>
       </div>
 
@@ -188,7 +188,7 @@
         <label>Age</label>
         <div class="input-box">
           <i class="fa-solid fa-cake-candles"></i>
-          <input type="number" value="72" readonly>
+          <input id="age" type="number" readonly>
         </div>
       </div>
 
@@ -196,7 +196,7 @@
         <label>Gender</label>
         <div class="input-box">
           <i class="fa-solid fa-venus-mars"></i>
-          <input type="text" value="Male" readonly>
+          <input id="gender" type="text"  readonly>
         </div>
       </div>
 
@@ -204,7 +204,7 @@
         <label>Blood Group</label>
         <div class="input-box">
           <i class="fa-solid fa-droplet"></i>
-          <input type="text" value="B+" readonly>
+          <input id="bloodGroup" type="text"  readonly>
         </div>
       </div>
 
@@ -215,7 +215,7 @@
         <label>Existing Diseases</label>
         <div class="input-box">
           <i class="fa-solid fa-heart-pulse"></i>
-          <input type="text" value="Diabetes, High Blood Pressure" readonly>
+          <input id="diseases" type="text"  readonly>
         </div>
       </div>
 
@@ -223,7 +223,7 @@
         <label>Allergies</label>
         <div class="input-box">
           <i class="fa-solid fa-triangle-exclamation"></i>
-          <input type="text" value="Penicillin" readonly>
+          <input id="allergies" type="text"  readonly>
         </div>
       </div>
 
@@ -231,7 +231,7 @@
         <label>Medical History</label>
         <div class="input-box">
           <i class="fa-solid fa-notes-medical"></i>
-          <textarea readonly>Bypass surgery in 2019. Mild arthritis.</textarea>
+          <textarea id="history" readonly></textarea>
         </div>
       </div>
 
@@ -239,7 +239,7 @@
         <label>Current Medications</label>
         <div class="input-box">
           <i class="fa-solid fa-pills"></i>
-          <textarea readonly>Metformin 500mg (Morning & Night), Amlodipine 5mg</textarea>
+          <textarea id="medications" readonly></textarea>
         </div>
       </div>
 
@@ -250,7 +250,7 @@
         <label>Guardian Name</label>
         <div class="input-box">
           <i class="fa-solid fa-user-shield"></i>
-          <input type="text" value="Anita Patel" readonly>
+          <input id="guardianName" type="text"  readonly>
         </div>
       </div>
 
@@ -258,7 +258,7 @@
         <label>Relationship</label>
         <div class="input-box">
           <i class="fa-solid fa-people-arrows"></i>
-          <input type="text" value="Daughter" readonly>
+          <input id="guardianRelation" type="text"  readonly>
         </div>
       </div>
 
@@ -266,7 +266,7 @@
         <label>Guardian Mobile</label>
         <div class="input-box">
           <i class="fa-solid fa-phone"></i>
-          <input type="text" value="+91 98765 43210" readonly>
+          <input id="guardianPhone" type="text" readonly>
         </div>
       </div>
 
@@ -274,7 +274,7 @@
         <label>Guardian Email</label>
         <div class="input-box">
           <i class="fa-solid fa-envelope"></i>
-          <input type="email" value="anita.patel@email.com" readonly>
+          <input id="guardianEmail" type="email" readonly>
         </div>
       </div>
 
@@ -290,6 +290,47 @@
 
     </div>
   </div>
+
+  <script type="module">
+import { auth, db } from "./firebase.js";
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { doc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+onAuthStateChanged(auth, async (user) => {
+  if (!user) {
+    window.location.href = "login.html";
+    return;
+  }
+
+  // 🔹 Check if a UID is passed in URL (nurse viewing a patient)
+  const params = new URLSearchParams(window.location.search);
+  const uid = params.get("uid") || user.uid; // fallback to current user if no uid
+
+  const docRef = doc(db, "users", uid);
+  const snap = await getDoc(docRef);
+
+  if (!snap.exists()) {
+    alert("No patient data found");
+    return;
+  }
+
+  const data = snap.data();
+
+  // Fill UI
+  document.getElementById("patientName").value = data.patientName || "";
+  document.getElementById("age").value = data.age || "";
+  document.getElementById("gender").value = data.gender || "";
+  document.getElementById("bloodGroup").value = data.bloodGroup || "";
+  document.getElementById("diseases").value = data.diseases || "";
+  document.getElementById("allergies").value = data.allergies || "";
+  document.getElementById("history").value = data.history || "";
+  document.getElementById("medications").value = data.medications || "";
+  document.getElementById("guardianName").value = data.guardianName || "";
+  document.getElementById("guardianRelation").value = data.guardianRelation || "";
+  document.getElementById("guardianPhone").value = data.guardianPhone || "";
+  document.getElementById("guardianEmail").value = data.guardianEmail || "";
+});
+</script>
 
 </body>
 </html>
