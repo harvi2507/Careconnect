@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>CareConnect | Dashboard</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}
+body{background:#eaf4ff;color:#1f2937}
+
+/* ===== LAYOUT ===== */
+.dashboard{display:flex;min-height:100vh}
+.sidebar{width:260px;background:#0a73ff;color:white;padding:25px 20px}
+.main{flex:1;padding:30px}
+
+/* ===== SIDEBAR ===== */
+.sidebar h2{font-size:24px;margin-bottom:40px}
+.menu a{
+  display:flex;gap:14px;align-items:center;
+  padding:14px;margin-bottom:10px;
+  border-radius:14px;color:white;
+  text-decoration:none
+}
+.menu a:hover{background:rgba(255,255,255,.18)}
+
+/* ===== TOP BAR ===== */
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:30px}
+.topbar h1{font-size:28px}
+
+/* ===== CARD ===== */
+.card{
+  background:white;
+  border-radius:22px;
+  padding:25px;
+  box-shadow:0 20px 60px rgba(0,0,0,.08);
+  margin-bottom:25px
+}
+
+/* ===== GRID ===== */
+.grid{
+  display:grid;
+  grid-template-columns:1fr;
+}
+
+/* ===== PATIENT ===== */
+.patient{display:flex;gap:20px;align-items:flex-start}
+.avatar{
+  width:90px;height:90px;
+  border-radius:20px;
+  background:linear-gradient(135deg,#e0e7ff,#fff);
+  display:flex;align-items:center;justify-content:center;
+  font-size:32px
+}
+.tags{display:flex;gap:8px;flex-wrap:wrap}
+.tags span{
+  background:#eef2ff;
+  padding:6px 14px;
+  border-radius:20px;
+  font-size:13px
+}
+.verify{background:#fff3cd;color:#b45309;font-weight:600}
+
+/* ===== GUARDIAN ===== */
+.guardian-box{
+  margin-left:auto;
+  background:#f5faff;
+  padding:16px;
+  border-radius:16px;
+  min-width:240px;
+  font-size:13px
+}
+.guardian-box h4{color:#0a73ff;margin-bottom:6px}
+
+/* ===== FULL WIDTH ABOUT IMAGE ===== */
+.about-section{
+  margin-top:30px;
+  border-radius:28px;
+  overflow:hidden;
+  position:relative;
+}
+.about-section img{
+  width:100%;
+  height:520px;
+  object-fit:cover;
+  filter:brightness(50%);
+}
+
+/* ===== TEXT OVER IMAGE ===== */
+.about-content{
+  position:absolute;
+  top:50%;
+  left:60px;
+  transform:translateY(-50%);
+  color:white;
+  max-width:520px;
+  animation:fadeSlide 1.5s ease forwards;
+}
+.about-content h2{
+  font-size:40px;
+  margin-bottom:14px;
+}
+.about-content p{
+  font-size:16px;
+  line-height:1.7;
+  margin-bottom:16px;
+  opacity:.95;
+}
+.about-content ul{
+  list-style:none;
+  padding-left:0
+}
+.about-content li{
+  margin:8px 0;
+  font-size:15px
+}
+
+/* ===== ANIMATION ===== */
+@keyframes fadeSlide{
+  from{opacity:0;transform:translateY(-50%) translateX(-40px)}
+  to{opacity:1;transform:translateY(-50%) translateX(0)}
+}
+
+/* ===== BUTTON ===== */
+.primary-btn{
+  background:#0a73ff;color:white;
+  border:none;padding:14px 22px;
+  border-radius:14px;font-weight:600;
+  cursor:pointer
+}
+
+/* ===== FOOTER ===== */
+footer{margin-top:40px;text-align:center;color:#6b7280}
+</style>
+</head>
+
+<body>
+
+<div class="dashboard">
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+  <h2><i class="fa-solid fa-heart"></i> CareConnect</h2>
+  <div class="menu">
+    <a href="#"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
+    <a href="patient-profile.html"><i class="fa-solid fa-user"></i> Patient</a>
+    <a href="explore-nurses.html"><i class="fa-solid fa-user-nurse"></i> Nurses</a>
+        <a href="vital.html"><i class="fa-solid fa-user-nurse"></i> Vitals</a>
+    <a href="ai.html"><i class="fa-solid fa-brain"></i> AI Insights</a>
+    <a href="request-status.html"><i class="fa-solid fa-clipboard-check"></i> Request Status</a>
+    <a href="patient-details-update.html"><i class="fa-solid fa-gear"></i> Settings</a>
+    <a href="signup.html"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+<div class="topbar">
+  <h1>Dashboard</h1>
+  <div>
+    <i class="fa-regular fa-bell"></i>
+    <i class="fa-solid fa-user-circle"></i>
+  </div>
+</div>
+
+<div class="grid">
+
+<!-- PATIENT CARD -->
+<div class="card patient">
+  <div class="avatar">✦</div>
+  <div>
+    <h2 id="patientName">Loading...</h2>
+    <div class="tags">
+      <span id="patientAge"></span>
+      <span id="patientGender"></span>
+      <span id="patientBlood"></span>
+      <span class="verify">Aadhaar Pending</span>
+    </div>
+  </div>
+
+  <div class="guardian-box">
+    <h4>Guardian</h4>
+    <p><b>Name:</b> <span id="guardianName"></span></p>
+    <p><b>Relation:</b> <span id="guardianRelation"></span></p>
+    <p><b>Mobile:</b> <span id="guardianPhone"></span></p>
+    <p><b>Email:</b> <span id="guardianEmail"></span></p>
+  </div>
+</div>
+
+<!-- ABOUT US FULL IMAGE -->
+<div class="about-section">
+  <img src="https://www.shutterstock.com/image-vector/hand-holding-icon-healthcare-medical-600nw-2489273105.jpg">
+
+
+  <div class="about-content">
+    <h2>Trusted Home Healthcare</h2>
+    <p>
+      CareConnect is a reliable nurse-booking platform designed to bring
+      professional healthcare services directly to patients’ homes.
+      We ensure safety, transparency, and quality care at every step.
+    </p>
+    <ul>
+      <li>✔ Verified & trained nurses</li>
+      <li>✔ Secure patient & guardian access</li>
+      <li>✔ Transparent booking & tracking</li>
+      <li>✔ Affordable, dependable home care</li>
+    </ul>
+    <br>
+    <button class="primary-btn">Explore Nurses</button>
+  </div>
+</div>
+
+</div>
+
+<footer>© 2025 CareConnect — Smart Home Healthcare</footer>
+
+</div>
+</div>
+
+<script type="module">
+import { auth, db } from "./firebase.js";
+import {
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+import {
+  doc,
+  getDoc
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+onAuthStateChanged(auth, async (user) => {
+  if (!user) {
+    alert("Please login first");
+    window.location.href = "login.html";
+    return;
+  }
+
+  try {
+    const snap = await getDoc(doc(db, "users", user.uid));
+
+    if (!snap.exists()) {
+      alert("User profile not found");
+      return;
+    }
+
+    const data = snap.data();
+
+    // 🔹 Patient Info
+    document.getElementById("patientName").innerText =
+      data.patientName || "N/A";
+
+    document.getElementById("patientAge").innerText =
+      data.age ? `${data.age} yrs` : "Age N/A";
+
+    document.getElementById("patientGender").innerText =
+      data.gender || "Gender N/A";
+
+    document.getElementById("patientBlood").innerText =
+      data.bloodGroup || "Blood N/A";
+
+    // 🔹 Guardian Info
+    document.getElementById("guardianName").innerText =
+      data.guardianName || "N/A";
+
+    document.getElementById("guardianRelation").innerText =
+      data.guardianRelation || "N/A";
+
+    document.getElementById("guardianPhone").innerText =
+      data.guardianPhone || "N/A";
+
+    document.getElementById("guardianEmail").innerText =
+      data.guardianEmail || "N/A";
+
+  } catch (err) {
+    console.error("Dashboard load error:", err);
+    alert("Failed to load dashboard data");
+  }
+});
+</script>
+
+</body>
+</html>
