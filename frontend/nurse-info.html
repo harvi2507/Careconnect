@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>CareConnect | Nurse Details</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Font -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&display=swap" rel="stylesheet">
+
+<!-- Icons -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+<style>
+:root{
+  --blue-main:#4a90e2;
+  --blue-soft:#eaf4ff;
+  --white:#ffffff;
+  --text-dark:#2b2b2b;
+  --text-light:#6a6a6a;
+}
+
+*{
+  box-sizing:border-box;
+  font-family:'Poppins',sans-serif;
+}
+
+body{
+  margin:0;
+  min-height:100vh;
+  background:var(--blue-soft);
+  display:flex;
+  justify-content:center;
+  padding:30px;
+}
+
+.profile-card{
+  background:var(--white);
+  width:100%;
+  max-width:900px;
+  padding:36px;
+  border-radius:22px;
+  box-shadow:0 30px 60px rgba(74,144,226,0.2);
+}
+
+.brand{
+  text-align:center;
+  margin-bottom:30px;
+}
+
+.brand h1{
+  margin:0;
+  color:var(--blue-main);
+  font-weight:600;
+}
+
+.brand p{
+  margin-top:6px;
+  color:var(--text-light);
+  font-size:14px;
+}
+
+/* PROFILE PHOTO */
+.photo-box{
+  display:flex;
+  justify-content:center;
+  margin-bottom:25px;
+}
+
+.photo-box img{
+  width:120px;
+  height:120px;
+  border-radius:50%;
+  object-fit:cover;
+  border:4px solid var(--blue-main);
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:20px;
+}
+
+.section-title{
+  grid-column:1/-1;
+  margin-top:20px;
+  font-size:16px;
+  color:var(--blue-main);
+  font-weight:600;
+}
+
+.field label{
+  font-size:14px;
+  color:var(--text-dark);
+  margin-bottom:6px;
+  display:block;
+  font-weight:600;
+}
+
+.input-box{
+  display:flex;
+  align-items:center;
+  background:var(--blue-soft);
+  padding:12px 14px;
+  border-radius:14px;
+  transition:.3s;
+}
+
+.input-box:hover{
+  transform:translateY(-2px);
+  box-shadow:0 10px 20px rgba(74,144,226,0.25);
+}
+
+.input-box i{
+  color:var(--blue-main);
+  margin-right:10px;
+  font-size:16px;
+}
+
+.input-box input,
+.input-box textarea{
+  border:none;
+  outline:none;
+  background:transparent;
+  width:100%;
+  font-size:14px;
+  color:var(--text-dark);
+  font-weight:600;
+  resize:none;
+}
+
+textarea{
+  min-height:80px;
+}
+
+.status-pending{
+  margin-top:6px;
+  font-size:13px;
+  color:#e67e22;
+  font-weight:600;
+}
+</style>
+</head>
+
+<body>
+
+<div class="profile-card">
+
+  <div class="brand">
+    <h1>Nurse Profile</h1>
+    <p>Professional details for patient trust & safety</p>
+  </div>
+
+  <!-- PROFILE PHOTO -->
+  <div class="photo-box">
+    <img src="https://i.imgur.com/6VBx3io.png" alt="Nurse Photo">
+  </div>
+
+  <div class="grid">
+
+    <!-- BASIC INFO -->
+    <div class="section-title">Basic Information</div>
+
+    <div class="field">
+      <label>Full Name</label>
+      <div class="input-box">
+        <i class="fa-solid fa-user-nurse"></i>
+        <input type="text" id="fullName" readonly>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Email</label>
+      <div class="input-box">
+        <i class="fa-solid fa-envelope"></i>
+        <input id="email" type="email" readonly>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Phone Number</label>
+      <div class="input-box">
+        <i class="fa-solid fa-phone"></i>
+        <input type="text" id="phone" readonly>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>City</label>
+      <div class="input-box">
+        <i class="fa-solid fa-city"></i>
+        <input type="text" id="city" readonly>
+      </div>
+    </div>
+
+    <!-- PROFESSIONAL INFO -->
+    <div class="section-title">Professional Information</div>
+
+    <div class="field">
+      <label>Specialization</label>
+      <div class="input-box">
+        <i class="fa-solid fa-stethoscope"></i>
+        <input type="text" id="specialization" readonly>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Experience</label>
+      <div class="input-box">
+        <i class="fa-solid fa-briefcase"></i>
+        <input type="text" id="experience" readonly>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Availability</label>
+      <div class="input-box">
+        <i class="fa-solid fa-clock"></i>
+        <input type="text" id="availability" readonly>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Consultation Cost (₹/day)</label>
+      <div class="input-box">
+        <i class="fa-solid fa-indian-rupee-sign"></i>
+        <input type="text" id="cost" readonly>
+      </div>
+    </div>
+
+    <!-- EXTRA -->
+    <div class="section-title">Additional Details</div>
+
+    <div class="field">
+      <label>Languages Spoken</label>
+      <div class="input-box">
+        <i class="fa-solid fa-language"></i>
+        <input type="text" id="languages" readonly>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>About You</label>
+      <div class="input-box">
+        <i class="fa-solid fa-circle-info"></i>
+        <textarea id="about" readonly></textarea>
+      </div>
+    </div>
+
+    <!-- VERIFICATION -->
+    <div class="section-title">Verification</div>
+
+    <div class="field">
+      <label>Aadhaar Verification</label>
+      <div class="input-box">
+        <i class="fa-solid fa-id-card"></i>
+        <input type="text" value="Uploaded" readonly>
+      </div>
+      <div class="status-pending">Aadhaar Verification: Pending</div>
+    </div>
+
+  </div>
+
+</div>
+<script type="module">
+import { auth, db } from "./firebase.js";
+import { onAuthStateChanged } from
+  "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { doc, getDoc } from
+  "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+onAuthStateChanged(auth, async (user) => {
+  if (!user) {
+    alert("Please login first");
+    window.location.href = "login.html";
+    return;
+  }
+
+  try {
+    const docRef = doc(db, "users", user.uid);
+    const snap = await getDoc(docRef);
+
+    if (!snap.exists()) {
+      alert("Profile not found");
+      return;
+    }
+
+    const d = snap.data();
+
+    document.getElementById("fullName").value = d.fullName || "";
+    document.getElementById("email").value = d.email || user.email;
+    document.getElementById("phone").value = d.phone || "";
+    document.getElementById("city").value = d.city || "";
+    document.getElementById("specialization").value = d.specialization || "";
+    document.getElementById("experience").value =
+      d.experience ? d.experience + " Years" : "";
+    document.getElementById("availability").value = d.availability || "";
+    document.getElementById("cost").value = d.cost || "";
+    document.getElementById("languages").value = d.languages || "";
+    document.getElementById("about").value = d.about || "";
+
+
+  } catch (error) {
+    console.error(error);
+    alert("Error loading profile");
+  }
+});
+</script>
+
+</body>
+</html>
