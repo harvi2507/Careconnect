@@ -54,6 +54,19 @@ button{
   color:white;font-weight:600;font-size:16px;
   cursor:pointer;
 }
+.toggle span{
+  flex:1;
+  text-align:center;
+  padding:10px;
+  font-weight:600;
+  cursor:pointer;
+  pointer-events:auto;
+}
+button{
+  cursor:pointer;
+  pointer-events:auto;
+}
+
 </style>
 </head>
 
@@ -88,34 +101,78 @@ button{
     </div>
   </div>
 
-  <button onclick="login()">Login</button>
+  <button id="loginBtn" type="button">Login</button>
 
 </div>
 
-<script>
-let role = "family";
+<script type="module">
+import { auth } from "./firebase.js";
+import { signInWithEmailAndPassword } from 
+  "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+  import { db } from "./firebase.js";
+  import { doc, getDoc } from
+  "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-document.getElementById("family").onclick = () => {
-  role = "family";
-  family.classList.add("active");
-  nurse.classList.remove("active");
-};
 
-document.getElementById("nurse").onclick = () => {
-  role = "nurse";
-  nurse.classList.add("active");
-  family.classList.remove("active");
-};
 
-function login() {
-  if (role === "family") {
-    window.location.href = "patient-details.html";
-  } else {
-    window.location.href = "nurse-infostore.html";
-  }
-}
+
+document.addEventListener("DOMContentLoaded", () => {
+
+  let role = "family";
+
+  const familyBtn = document.getElementById("family");
+  const nurseBtn = document.getElementById("nurse");
+  const loginBtn = document.getElementById("loginBtn");
+
+  // DEBUG CHECK
+  console.log(familyBtn, nurseBtn, loginBtn);
+
+  familyBtn.addEventListener("click", () => {
+    role = "family";
+    familyBtn.classList.add("active");
+    nurseBtn.classList.remove("active");
+  });
+
+  nurseBtn.addEventListener("click", () => {
+    role = "nurse";
+    nurseBtn.classList.add("active");
+    familyBtn.classList.remove("active");
+  });
+
+  loginBtn.addEventListener("click", () => {
+    const email = document.querySelector('input[type="email"]').value;
+    const password = document.querySelector('input[type="password"]').value;
+
+    if (!email || !password) {
+      alert("Enter email and password");
+      return;
+    }
+
+    signInWithEmailAndPassword(auth, email, password)
+  .then(async (userCredential) => {
+
+    const user = userCredential.user;
+    const docRef = doc(db, "users", user.uid);
+    const docSnap = await getDoc(docRef);
+
+    alert("Login successful");
+
+    // ✅ If patient data already exists → Dashboard
+    if (docSnap.exists() && docSnap.data().patientName) {
+      window.location.href = "d1.html";
+    } 
+
+    // ✅ Nurse
+    else {
+      window.location.href = "nurse-dashboard.html";
+    }
+  })
+  .catch(err => alert(err.message));
+
+  });
+
+});
 </script>
 
 </body>
 </html>
-
